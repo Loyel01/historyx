@@ -3,45 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Chaîne Twitch</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Espace d'Écriture</title>
+    <style>
+        /* Styles pour l'en-tête */
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        /* Styles pour les sections */
+        section {
+            margin: 2rem;
+        }
+
+        /* Styles pour le formulaire */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Styles pour les messages */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Ma Chaîne Twitch</h1>
+        <h1>Espace d'Écriture</h1>
     </header>
-    <nav>
-        <ul>
-            <li><a href="#reseaux">Réseaux</a></li>
-            <li><a href="#programmes">Programmes</a></li>
-            <li><a href="#jours-speciaux">Jours Spéciaux</a></li>
-        </ul>
-    </nav>
     <main>
-        <section id="reseaux">
-            <h2>Réseaux Sociaux</h2>
-            <div class="reseaux-container">
-                <!-- Ajoute tes liens vers les réseaux sociaux ici -->
-            </div>
+        <section>
+            <h2>Partagez votre message</h2>
+            <form id="message-form">
+                <label for="username">Nom :</label>
+                <input type="text" id="username" required>
+                <label for="message">Message :</label>
+                <textarea id="message" required></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
         </section>
-        
-        <section id="programmes">
-            <h2>Programmes de la Semaine</h2>
-            <div class="programmes-container">
-                <!-- Ajoute les détails de tes programmes ici -->
-            </div>
-        </section>
-        
-        <section id="jours-speciaux">
-            <h2>Jours Spéciaux</h2>
-            <div class="jours-speciaux-container">
-                <!-- Ajoute les détails des jours spéciaux ici -->
-            </div>
+        <section>
+            <h2>Messages partagés</h2>
+            <ul id="message-list">
+                <!-- Les messages seront ajoutés ici via JavaScript -->
+            </ul>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2023 Ma Chaîne Twitch. Tous droits réservés.</p>
-    </footer>
-    <script src="scripts.js"></script>
+    <script>
+        // Sélectionner les éléments du DOM
+        const messageForm = document.getElementById('message-form');
+        const messageList = document.getElementById('message-list');
+
+        // Écouter la soumission du formulaire
+        messageForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const usernameInput = document.getElementById('username');
+            const messageInput = document.getElementById('message');
+
+            const username = usernameInput.value;
+            const message = messageInput.value;
+
+            // Créer un nouvel élément de message
+            const messageItem = document.createElement('li');
+            messageItem.innerHTML = `<strong>${username}</strong>: ${message}`;
+
+            // Ajouter le message à la liste
+            messageList.appendChild(messageItem);
+
+            // Effacer les champs de saisie
+            usernameInput.value = '';
+            messageInput.value = '';
+        });
+    </script>
 </body>
 </html>
