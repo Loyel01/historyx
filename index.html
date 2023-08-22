@@ -45,10 +45,38 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        // Code JavaScript qui utilise Firebase
+        // Référence à la base de données Firebase
         const dbRef = firebase.database().ref();
 
-        // ... Autres manipulations Firebase et code JavaScript
+        // Écouter la soumission du formulaire
+        document.getElementById('message-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const usernameInput = document.getElementById('username');
+            const messageInput = document.getElementById('message');
+
+            const username = usernameInput.value;
+            const message = messageInput.value;
+
+            // Enregistrer les données dans Firebase Realtime Database
+            dbRef.push({
+                username: username,
+                message: message
+            });
+
+            // Effacer les champs de saisie
+            usernameInput.value = '';
+            messageInput.value = '';
+        });
+
+        // Écouter les modifications dans la base de données et mettre à jour l'affichage
+        dbRef.on('child_added', function(snapshot) {
+            const messageData = snapshot.val();
+            const messageList = document.getElementById('message-list');
+            const messageItem = document.createElement('li');
+            messageItem.textContent = `${messageData.username}: ${messageData.message}`;
+            messageList.appendChild(messageItem);
+        });
     </script>
 </body>
 </html>
