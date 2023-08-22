@@ -35,6 +35,29 @@
             margin-bottom: 0.5rem;
         }
     </style>
+
+    <!-- Autres balises dans le <head> ... -->
+
+<!-- Ajoute ces balises script pour Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
+
+<script>
+  // Initialise Firebase avec ta configuration
+  const firebaseConfig = {
+    apiKey: "TA_CLE_API",
+    authDomain: "TON_DOMAIN.firebaseapp.com",
+    databaseURL: "https://TON_DOMAIN-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "TON_PROJET_ID",
+    storageBucket: "TON_STORAGE_BUCKET.appspot.com",
+    messagingSenderId: "TON_SENDER_ID",
+    appId: "TON_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- Autres balises dans le <body> ... -->
+
 </head>
 <body>
     <header>
@@ -60,30 +83,32 @@
     </main>
     <script>
         // Sélectionner les éléments du DOM
-        const messageForm = document.getElementById('message-form');
-        const messageList = document.getElementById('message-list');
+const messageForm = document.getElementById('message-form');
+const messageList = document.getElementById('message-list');
 
-        // Écouter la soumission du formulaire
-        messageForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+// Référence à la base de données Firebase
+const dbRef = firebase.database().ref();
 
-            const usernameInput = document.getElementById('username');
-            const messageInput = document.getElementById('message');
+// Écouter la soumission du formulaire
+messageForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-            const username = usernameInput.value;
-            const message = messageInput.value;
+    const usernameInput = document.getElementById('username');
+    const messageInput = document.getElementById('message');
 
-            // Créer un nouvel élément de message
-            const messageItem = document.createElement('li');
-            messageItem.innerHTML = `<strong>${username}</strong>: ${message}`;
+    const username = usernameInput.value;
+    const message = messageInput.value;
 
-            // Ajouter le message à la liste
-            messageList.appendChild(messageItem);
+    // Enregistrer les données dans Firebase Realtime Database
+    dbRef.push({
+        username: username,
+        message: message
+    });
 
-            // Effacer les champs de saisie
-            usernameInput.value = '';
-            messageInput.value = '';
-        });
-    </script>
+    // Effacer les champs de saisie
+    usernameInput.value = '';
+    messageInput.value = '';
+});
+</script>
 </body>
 </html>
