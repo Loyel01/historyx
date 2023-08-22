@@ -5,36 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace d'Écriture</title>
     <style>
-        /* Styles pour l'en-tête */
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem 0;
-        }
-
-        /* Styles pour les sections */
-        section {
-            margin: 2rem;
-        }
-
-        /* Styles pour le formulaire */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        /* Styles pour les messages */
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
+        /* Styles ... */
     </style>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js" defer></script>
 </head>
 <body>
     <header>
@@ -58,13 +32,11 @@
             </ul>
         </section>
     </main>
-    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js" defer></script>
     <script>
-        // Initialise Firebase avec ta configuration
+        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "TA_CLE_API",
-            authDomain: "TON_DOMAIN.firebaseapp.com",
+            authDomain: "TON_AUTH_DOMAIN",
             databaseURL: "https://TON_DOMAIN-default-rtdb.europe-west1.firebasedatabase.app",
             projectId: "TON_PROJET_ID",
             storageBucket: "TON_STORAGE_BUCKET.appspot.com",
@@ -73,33 +45,10 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        // Sélectionner les éléments du DOM
-        const messageForm = document.getElementById('message-form');
-        const messageList = document.getElementById('message-list');
-
-        // Référence à la base de données Firebase
+        // Code JavaScript qui utilise Firebase
         const dbRef = firebase.database().ref();
 
-        // Écouter la soumission du formulaire
-        messageForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const usernameInput = document.getElementById('username');
-            const messageInput = document.getElementById('message');
-
-            const username = usernameInput.value;
-            const message = messageInput.value;
-
-            // Enregistrer les données dans Firebase Realtime Database
-            dbRef.push({
-                username: username,
-                message: message
-            });
-
-            // Effacer les champs de saisie
-            usernameInput.value = '';
-            messageInput.value = '';
-        });
+        // ... Autres manipulations Firebase et code JavaScript
     </script>
 </body>
 </html>
