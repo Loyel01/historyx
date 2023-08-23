@@ -1,82 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace d'Écriture</title>
-    <style>
-        /* Styles ... */
-    </style>
-    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message Board</title>
+  <script src="app.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Espace d'Écriture</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Partagez votre message</h2>
-            <form id="message-form">
-                <label for="username">Nom :</label>
-                <input type="text" id="username" required>
-                <label for="message">Message :</label>
-                <textarea id="message" required></textarea>
-                <button type="submit">Envoyer</button>
-            </form>
-        </section>
-        <section>
-            <h2>Messages partagés</h2>
-            <ul id="message-list">
-                <!-- Les messages seront ajoutés ici via JavaScript -->
-            </ul>
-        </section>
-    </main>
-    <script>
-        // Configuration Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyD2SYYWXN3IkOwyf16IvSeUl-Lg90SjqHs",
-            authDomain: "historyx-fb1fa.firebaseapp.com",
-            databaseURL: "https://historyx-fb1fa-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "historyx-fb1fa",
-            storageBucket: "historyx-fb1fa.appspot.com",
-            messagingSenderId: "871985555236",
-            appId: "1:871985555236:web:b1bb1937d459e3e91e75b1"
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        // Référence à la base de données Firebase
-        const dbRef = firebase.database().ref();
-
-        // Écouter la soumission du formulaire
-        document.getElementById('message-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const usernameInput = document.getElementById('username');
-            const messageInput = document.getElementById('message');
-
-            const username = usernameInput.value;
-            const message = messageInput.value;
-
-            // Enregistrer les données dans Firebase Realtime Database
-            dbRef.push({
-                username: username,
-                message: message
-            });
-
-            // Effacer les champs de saisie
-            usernameInput.value = '';
-            messageInput.value = '';
-        });
-
-        // Écouter les modifications dans la base de données et mettre à jour l'affichage
-        dbRef.on('child_added', function(snapshot) {
-            const messageData = snapshot.val();
-            const messageList = document.getElementById('message-list');
-            const messageItem = document.createElement('li');
-            messageItem.textContent = `${messageData.username}: ${messageData.message}`;
-            messageList.appendChild(messageItem);
-        });
-    </script>
+  <h1>Message Board</h1>
+  <form id="message-form">
+    <label for="username">Username:</label>
+    <input type="text" id="username" required><br>
+    <label for="message">Message:</label>
+    <textarea id="message" required></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+  <div id="messages"></div>
 </body>
 </html>
